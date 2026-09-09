@@ -1,0 +1,35 @@
+---
+import * as Plot from "@observablehq/plot";
+import PlotFigure from "../../components/PlotFigure.astro";
+import penguins from "../../assets/penguins.json";
+
+const penguinsAdelie = penguins.filter(({ species }) => species === "Adelie");
+---
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Penguins Adelie</title>
+    </head>
+
+    <body>
+        <nav>
+            <a href="/species/Adelie/">Adelie</a>
+            <a href="/species/Gentoo/">Gentoo</a>
+            <a href="/species/Chinstrap/">Chinstrap</a>
+        </nav>
+
+        <h1>Penguins Adelie</h1>
+
+        <PlotFigure
+            options={{
+                marks: [
+                    Plot.dot(penguinsAdelie, {
+                        x: "culmen_length_mm",
+                        y: "culmen_depth_mm",
+                    }),
+                ],
+            }}
+        />
+    </body>
+</html>
