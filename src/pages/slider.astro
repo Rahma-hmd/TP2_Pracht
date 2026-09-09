@@ -1,11 +1,5 @@
 ---
-import * as Plot from "@observablehq/plot";
-import PlotFigure from "../components/PlotFigure.astro";
-import penguins from "../assets/penguins.json";
-
-const adelie = penguins.filter(({ species }) => species === "Adelie");
-const gentoo = penguins.filter(({ species }) => species === "Gentoo");
-const chinstrap = penguins.filter(({ species }) => species === "Chinstrap");
+import GraphicSpecies from "../components/GraphicSpecies.astro";
 ---
 
 <html lang="fr">
@@ -25,115 +19,82 @@ const chinstrap = penguins.filter(({ species }) => species === "Chinstrap");
 
         <div class="slider">
             <section class="item" id="adelie">
-                <h2>Adelie</h2>
-
-                <PlotFigure
-                    options={{
-                        marks: [
-                            Plot.dot(adelie, {
-                                x: "culmen_length_mm",
-                                y: "culmen_depth_mm",
-                            }),
-                        ],
-                    }}
-                />
+                <GraphicSpecies species="Adelie" />
             </section>
 
             <section class="item" id="gentoo">
-                <h2>Gentoo</h2>
-
-                <PlotFigure
-                    options={{
-                        marks: [
-                            Plot.dot(gentoo, {
-                                x: "culmen_length_mm",
-                                y: "culmen_depth_mm",
-                            }),
-                        ],
-                    }}
-                />
+                <GraphicSpecies species="Gentoo" />
             </section>
 
             <section class="item" id="chinstrap">
-                <h2>Chinstrap</h2>
-
-                <PlotFigure
-                    options={{
-                        marks: [
-                            Plot.dot(chinstrap, {
-                                x: "culmen_length_mm",
-                                y: "culmen_depth_mm",
-                            }),
-                        ],
-                    }}
-                />
+                <GraphicSpecies species="Chinstrap" />
             </section>
+
+            <script>
+                const menuItems = document.querySelectorAll(".menu-item");
+                const items = document.querySelectorAll(".item");
+
+                console.log("menuItems", menuItems);
+                console.log("items", items);
+
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            const id = entry.target.getAttribute("id");
+
+                            const menuItem = document.querySelector(
+                                `.menu-item[href="#${id}"]`,
+                            );
+
+                            if (entry.isIntersecting) {
+                                menuItem?.classList.add("active");
+                            } else {
+                                menuItem?.classList.remove("active");
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.5,
+                    },
+                );
+
+                items.forEach((item) => {
+                    observer.observe(item);
+                });
+            </script>
         </div>
-
-        <script>
-            const menuItems = document.querySelectorAll(".menu-item");
-            const items = document.querySelectorAll(".item");
-
-            console.log("menuItems", menuItems);
-            console.log("items", items);
-
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        const id = entry.target.getAttribute("id");
-
-                        const menuItem = document.querySelector(
-                            `.menu-item[href="#${id}"]`,
-                        );
-
-                        if (entry.isIntersecting) {
-                            menuItem?.classList.add("active");
-                        } else {
-                            menuItem?.classList.remove("active");
-                        }
-                    });
-                },
-                {
-                    threshold: 0.5,
-                },
-            );
-
-            items.forEach((item) => {
-                observer.observe(item);
-            });
-        </script>
     </body>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu-item.active {
+            background-color: #fecaca;
+        }
+
+        .slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+        }
+
+        .item {
+            min-width: 100%;
+            scroll-snap-align: start;
+        }
+    </style>
 </html>
-
-<style>
-    html {
-        scroll-behavior: smooth;
-    }
-
-    nav {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 30px;
-    }
-
-    .menu-item {
-        padding: 10px 20px;
-        text-decoration: none;
-        color: black;
-    }
-
-    .menu-item.active {
-        background-color: #fecaca;
-    }
-
-    .slider {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-    }
-
-    .item {
-        min-width: 100%;
-        scroll-snap-align: start;
-    }
-</style>

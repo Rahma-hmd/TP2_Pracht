@@ -6,16 +6,62 @@ import penguins from "../assets/penguins.json";
 ---
 
 <Layout>
-  <h1 class="text-2xl">Test Astro et Plot (Observablehq)</h1>
-  <PlotFigure
-    options={{
-      marks: [
-        Plot.dot(penguins, {
-          x: "culmen_length_mm",
-          y: "culmen_depth_mm",
-          stroke: "species",
-        }),
-      ],
-    }}
-  />
+  <!-- MENU -->
+  <nav class="bg-gray-900 text-white px-6 py-4 mb-8">
+    <div class="flex items-center gap-8">
+      <!-- Accueil -->
+      <a href="/" class="font-semibold hover:text-blue-300"> Accueil </a>
+
+      <!-- MENU DÉROULANT PENGUINS -->
+      <div class="relative group">
+        <button
+          class="font-semibold hover:text-blue-300 flex items-center gap-2"
+        >
+          Penguins
+          <span>▼</span>
+        </button>
+
+        <!-- SOUS-MENU -->
+        <div
+          class="absolute left-0 top-full pt-2 hidden group-hover:block z-50"
+        >
+          <div
+            class="bg-white text-black shadow-lg rounded-lg overflow-hidden min-w-48"
+          >
+            <a href="/slider/#adelie" class="block px-5 py-3 hover:bg-gray-100">
+              Adelie
+            </a>
+
+            <a href="/slider/#gentoo" class="block px-5 py-3 hover:bg-gray-100">
+              Gentoo
+            </a>
+
+            <a
+              href="/slider/#chinstrap"
+              class="block px-5 py-3 hover:bg-gray-100"
+            >
+              Chinstrap
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENU DE LA PAGE -->
+  <main class="px-6">
+    <h1 class="text-2xl font-bold mb-6">Graphiques</h1>
+
+    <PlotFigure
+      options={{
+        marks: [
+          Plot.dot(penguins, {
+            x: "culmen_length_mm",
+            y: "culmen_depth_mm",
+            stroke: "species",
+          }),
+        ],
+      }}
+    />
+  </main>
 </Layout>

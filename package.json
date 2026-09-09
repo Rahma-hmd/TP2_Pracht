@@ -17,6 +17,7 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "@types/jsdom": "^30.0.0"
+    "@types/jsdom": "^30.0.0",
+    "daisyui": "^5.7.32"
   }
 }
