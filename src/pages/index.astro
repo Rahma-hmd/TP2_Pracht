@@ -6,62 +6,183 @@ import penguins from "../assets/penguins.json";
 ---
 
 <Layout>
-  <!-- MENU -->
-  <nav class="bg-gray-900 text-white px-6 py-4 mb-8">
-    <div class="flex items-center gap-8">
-      <!-- Accueil -->
-      <a href="/" class="font-semibold hover:text-blue-300"> Accueil </a>
+  <!-- NAVBAR -->
+  <div class="navbar bg-base-200 border-b border-base-300 px-6">
+    <!-- GAUCHE -->
+    <div class="navbar-start">
+      <a href="/" class="btn btn-ghost text-xl font-bold"> DataViz </a>
+    </div>
 
-      <!-- MENU DÉROULANT PENGUINS -->
-      <div class="relative group">
-        <button
-          class="font-semibold hover:text-blue-300 flex items-center gap-2"
-        >
-          Penguins
-          <span>▼</span>
-        </button>
+    <!-- CENTRE -->
+    <div class="navbar-center hidden md:flex">
+      <ul class="menu menu-horizontal px-1 gap-2">
+        <li>
+          <a href="/" class="font-semibold"> Accueil </a>
+        </li>
 
-        <!-- SOUS-MENU -->
-        <div
-          class="absolute left-0 top-full pt-2 hidden group-hover:block z-50"
-        >
-          <div
-            class="bg-white text-black shadow-lg rounded-lg overflow-hidden min-w-48"
-          >
-            <a href="/slider/#adelie" class="block px-5 py-3 hover:bg-gray-100">
-              Adelie
-            </a>
+        <li>
+          <details>
+            <summary> Visualisations </summary>
 
-            <a href="/slider/#gentoo" class="block px-5 py-3 hover:bg-gray-100">
-              Gentoo
-            </a>
+            <ul class="bg-base-100 rounded-box w-56 p-2 z-50 shadow-lg">
+              <li class="menu-title">
+                <span>Penguins</span>
+              </li>
 
-            <a
-              href="/slider/#chinstrap"
-              class="block px-5 py-3 hover:bg-gray-100"
+              <li>
+                <a href="/species/Adelie/"> Adelie </a>
+              </li>
+
+              <li>
+                <a href="/species/Gentoo/"> Gentoo </a>
+              </li>
+
+              <li>
+                <a href="/species/Chinstrap/"> Chinstrap </a>
+              </li>
+
+              <li>
+                <a href="/slider/"> Slider des espèces </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
+
+    <!-- DROITE VIDE -->
+    <div class="navbar-end"></div>
+  </div>
+
+  <!-- CONTENU -->
+  <main class="min-h-screen px-6 py-10 bg-[#b0c4de]">
+    <div class="max-w-7xl mx-auto">
+      <!-- TITRE -->
+      <section class="mb-10">
+        <h1 class="text-5xl font-bold mb-4">Accueil</h1>
+
+        <p class="text-lg text-base-content/70 max-w-3xl">
+          Explorez différentes visualisations de données.
+        </p>
+      </section>
+
+      <!-- VISUALISATIONS -->
+      <section>
+        <h2 class="text-3xl font-bold mb-5">Visualisations</h2>
+
+        <!-- CARTE PENGUINS -->
+        <div class="card bg-base-100 border border-base-300 shadow-md">
+          <div class="card-body">
+            <!-- EN-TÊTE -->
+            <div
+              class="flex flex-col md:flex-row md:items-center justify-between gap-5"
             >
-              Chinstrap
-            </a>
+              <div>
+                <div class="flex items-center gap-3 mb-2">
+                  <h2 class="card-title text-2xl">Penguins</h2>
+
+            
+                </div>
+
+                <p class="text-base-content/70">
+                  Comparaison de la longueur et de la profondeur du bec selon
+                  les différentes espèces.
+                </p>
+              </div>
+
+              <!-- BOUTON EXPLORER -->
+              <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-primary">
+                  Explorer
+                  <span>⌄</span>
+                </div>
+
+                <ul
+                  tabindex="-1"
+                  class="dropdown-content menu bg-base-100 rounded-box z-50 w-56 p-2 shadow-xl border border-base-300"
+                >
+                  <li>
+                    <a href="/species/Adelie/"> Adelie </a>
+                  </li>
+
+                  <li>
+                    <a href="/species/Gentoo/"> Gentoo </a>
+                  </li>
+
+                  <li>
+                    <a href="/species/Chinstrap/"> Chinstrap </a>
+                  </li>
+
+                  <li class="border-t border-base-300 mt-2 pt-2">
+                    <a href="/slider/" class="font-semibold">
+                      Voir les 3 espèces
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- GRAPHIQUE -->
+            <div class="overflow-x-auto">
+              <PlotFigure
+                options={{
+                  grid: true,
+
+                  x: {
+                    label: "Longueur du bec (mm)",
+                  },
+
+                  y: {
+                    label: "Profondeur du bec (mm)",
+                  },
+
+                  color: {
+                    legend: true,
+                  },
+
+                  marks: [
+                    Plot.dot(penguins, {
+                      x: "culmen_length_mm",
+                      y: "culmen_depth_mm",
+                      stroke: "species",
+                    }),
+                  ],
+                }}
+              />
+            </div>
+
+            <!-- BADGES -->
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="badge badge-outline"> Adelie </span>
+
+              <span class="badge badge-outline"> Gentoo </span>
+
+              <span class="badge badge-outline"> Chinstrap </span>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- FUTURES VISUALISATIONS -->
+      <section class="mt-10">
+        <h2 class="text-2xl font-bold mb-4">Autres visualisations</h2>
+
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="card bg-base-100 border border-base-300">
+            <div class="card-body">
+              <span class="badge badge-ghost"> À venir </span>
+
+              <h3 class="card-title">Nouvelle visualisation</h3>
+
+              <p class="text-base-content/60">
+                Un prochain graphique sera ajouté ici.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </nav>
-
-  <!-- CONTENU DE LA PAGE -->
-  <main class="px-6">
-    <h1 class="text-2xl font-bold mb-6">Graphiques</h1>
-
-    <PlotFigure
-      options={{
-        marks: [
-          Plot.dot(penguins, {
-            x: "culmen_length_mm",
-            y: "culmen_depth_mm",
-            stroke: "species",
-          }),
-        ],
-      }}
-    />
   </main>
 </Layout>

@@ -1,2 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @plugin "daisyui";
+
+html,
+body,
+button,
+input,
+textarea,
+select,
+optgroup {
+	font-family: "Montserrat", sans-serif;
+}
+
+.penguin-page {
+	background-color: #b0c4de;
+}
